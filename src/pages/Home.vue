@@ -15,11 +15,9 @@
 </template>
 
 <script setup>
-import {useRoute} from "vue-router";
+
 import {onMounted, ref} from "vue";
 import axios from '../request/request'
-import qs from 'qs'
-
 
 
 const userList = ref([]);
@@ -27,11 +25,12 @@ const userList = ref([]);
 onMounted(() => {
   axios.get('/user/recommend', {
     params: {
-
+        currentPage: 1,
+        sizePage: 10
     }
   }).then(function (response) {
     console.log(response.data);
-    let data = response.data;
+    let data = response.data?.records;
     if (data) {
       data.forEach(item => {
         item.tags = JSON.parse(item.tags);
